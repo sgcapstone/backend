@@ -1,0 +1,19 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./node_modules/@types/*", "./@types/*"]
+    }
+  },
+  "include": ["./lib/**/*.ts"],
+  "exclude": ["./node_modules/express-boom"]
+}
