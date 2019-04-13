@@ -1,38 +1,40 @@
 import * as Sequelize from 'sequelize';
-
 import {tableMeta, tables} from '../constants';
-import {role} from '../enums/role';
 
-export interface ServicesAttributes{
-    servicename?: string;
-    providername?: number;
+export interface ServicesAttributes {
+    id?: string;
+    serviceName?: string;
+    providerId?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
-
 export interface ServicesInstance
-    extend Sequelize.Instance<ServicesAttributes>{
-    servicename: string;
-    providername: number;
+    extends Sequelize.Instance<ServicesAttributes> {
+    id: string;
+    serviceName: string;
+    providerId: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export default(
-    sequelize: Sequelize.Sequqlize,
+    sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ) => {
-    const Provider: any = sequelize.define(tables.consumer, {
+    const Service: any = sequelize.define(tables.services, {
         ...tableMeta,
-        servicename:{
+        serviceName: {
             allowNull: false,
             type: DataTypes.STRING,
             field: 'service_name',
         },
-        providername:{
+        providerId: {
             allowNull: false,
             type: DataTypes.INTEGER,
-            field: 'provider_name',
+            field: 'provider_id',
         },
     });
 
-    return Consumer;
+    return Service;
 };
-
