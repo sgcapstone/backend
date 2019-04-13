@@ -10,7 +10,7 @@ const sanatizeServiceProvider = (serviceProvider: ServiceProvider) => {
     const {password, ...rest} = service.get({plain: true});
     return rest;
 };
-// testing
+
 export default {
     async getAll(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
@@ -18,6 +18,57 @@ export default {
             attributes: {exclude: ['password']}
         });
         return res.status(200).json(serviceProviders);
+    },
+
+    // get function for address
+    async getByAddress(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const serviceProviderAddress = req.params.address;
+        const serviceProvider = await models.serviceProviders.findOne({
+            where: {address: serviceProviderAddress}
+        });
+        return res.status(200).json(serviceProvider);
+    },
+
+    // get function for city
+    async getByCity(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const serviceProviderCity = req.params.city;
+        const serviceProvider = await models.serviceProviders.findOne({
+            where: {city: serviceProvidercity}
+        });
+        return res.status(200).json(serviceProvider);
+    },
+
+    // get function for state
+    async getByState(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const serviceProviderState = req.params.state;
+        const serviceProvider = await models.serviceProviders.findOne({
+            where: {state: serviceProviderState}
+        });
+        return res.status(200).json(serviceProvider);
+    },
+
+
+    // get function for zip
+    async getByZip(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const serviceProviderZip = req.params.zip;
+        const serviceProvider = await models.serviceProviders.findOne({
+            where: {zip: serviceProviderState}
+        });
+        return res.status(200).json(serviceProvider);
+    },
+
+    // get function for review
+    async getByReview(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const serviceProviderReview = req.params.review;
+        const serviceProvider = await models.serviceProviders.findOne({
+            where: {review: serviceProviderReview}
+        });
+        return res.status(200).json(serviceProvider);
     },
 
     async getById(req: Request, res: Response, next: NextFunction) {
@@ -32,7 +83,7 @@ export default {
 
     async getByServiceProviderId(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderId = req.params.serviceProviderId;
+        const serviceProviderId = req.params.businessId;
         const serviceProvider = await models.serviceProviders.findOne({
             where: {serviceProviderId},
         });
@@ -133,7 +184,6 @@ export default {
 
     },
 
-
     async delete(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const serviceProviderId = req.params.id;
@@ -162,4 +212,6 @@ export default {
         }
         return res.boom.unauthorized();
     },
+
+
 };
