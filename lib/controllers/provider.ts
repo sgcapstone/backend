@@ -40,7 +40,7 @@ export default {
         return res.status(200).json(provider);
     },
 
-    // get function for state
+    // get function for state 
     async getByState(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerState = req.params.state;
