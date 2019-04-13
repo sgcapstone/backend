@@ -4,10 +4,10 @@ import customerController from '../controllers/consumer';
 
 const router = express.Router();
 router.get('/', customerController.getAll);
-router.get('/:customerid', customerController.getByConsumerId);
+router.get('/:customerId', customerController.getByConsumerId);
 router.post('/', customerController.create);
 router.post('/login', customerController.login);
-router.put('/:customerid', customerController.update);
-router.delete('/:customerid', customerController.delete);
+router.put('/:customerId', customerController.update);
+router.delete('/:customerId', customerController.delete);
 
 export default router;

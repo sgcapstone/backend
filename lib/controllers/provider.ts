@@ -21,9 +21,9 @@ export default {
     // get function for city
     async getByCity(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providerCity = req.params.city;
+        const city = req.params.city;
         const provider = await models.providers.findAll({
-            where: {city: providerCity},
+            where: {city},
         });
         return res.status(200).json(provider);
     },
@@ -31,9 +31,19 @@ export default {
     // get function for provider name
     async getByName(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providerNa = req.params.providerName;
+        const providerName = req.params.providerName;
         const provider = await models.providers.findAll({
-            where: {providername: providerNa},
+            where: {providerName},
+        });
+        return res.status(200).json(provider);
+    },
+
+    // get function for provider name
+    async getByService(req: Request, res: Response, next: NextFunction) {
+        const models = getModels();
+        const providerName = req.params.providerName;
+        const provider = await models.providers.findAll({
+            where: {providerName},
         });
         return res.status(200).json(provider);
     },
@@ -86,6 +96,8 @@ export default {
         const hash = await bcrypt.hash(req.body.password, saltRounds);
         const provider = await models.providers.create({
             ...sanatizeInData(req.body),
+            password: hash,
+            providerId,
         });
 
         return res.status(201).json(sanatizeProvider(provider));
