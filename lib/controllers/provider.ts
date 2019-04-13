@@ -35,7 +35,7 @@ export default {
         const models = getModels();
         const providerCity = req.params.city;
         const provider = await models.providers.findAll({
-            where: {city: providercity}
+            where: {city: providerCity}
         });
         return res.status(200).json(provider);
     },
@@ -56,14 +56,24 @@ export default {
         const models = getModels();
         const providerZip = req.params.zip;
         const provider = await models.providers.findAll({
-            where: {zip: providerState}
+            where: {zip: providerZip}
+        });
+        return res.status(200).json(provider);
+    },
+
+    // get function for provider name
+    async getByName(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const providerName = req.params.providername;
+        const provider = await models.providers.findAll({
+            where: {providername: providerName}
         });
         return res.status(200).json(provider);
     },
 
     async getByServiceProviderId(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const providerId = req.params.businessId;
+        const providerId = req.params.providerid;
         const provider = await models.providers.findOne({
             where: {providerId},
         });
