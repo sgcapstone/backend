@@ -8,11 +8,12 @@ router.get('/:address', providerController.getByAddress);
 router.get('/:city', providerController.getByCity);
 router.get('/:state', providerController.getByState);
 router.get('/:zip', providerController.getByZip);
-router.get('/:review', providerController.getByReview);
-router.get('/:providername', providerController.getByame);
-router.get('/:businessid', providerController.getById);
+router.get('/:phone', providerController.getByPhone);
+router.get('/:email', providerController.getByEmail);
+router.get('/:providerName', providerController.getByName);
+router.get('/:providerId', providerController.getById);
 router.post('/', providerController.create);
-router.put('/:id', providerController.update);
-router.delete('/:id', providerController.delete);
+router.put('/:providerId', providerController.update);
+router.delete('/:providerId', providerController.delete);
 
 export default router;
