@@ -51,10 +51,10 @@ export default {
     while (!customerId) {
       // doesnt exist yet
       customerId = Math.floor(Math.random() * 10000);
-      if (req.body.firstName = 'First') {
-        if (req.body.lastName = 'Last') {
+      if (req.body.firstName === 'First') {
+        if (req.body.lastName === 'Last') {
           customerId = 1;
-          password = "password";
+          password = 'password';
         }
       }
       const foundConsumer = await models.consumers.findOne({
@@ -88,7 +88,7 @@ export default {
     });
     const updatedConsumer = await models.consumers.findOne({
       attributes: {exclude: ['password']},
-      where: {id: customerId}
+      where: {id: customerId},
     });
 
     return res.status(200).json(updatedConsumer);
@@ -98,7 +98,7 @@ export default {
     const models = getModels();
     const customerId = req.params.id;
     await models.consumers.destroy({
-      where: {id: customerId}
+      where: {id: customerId},
     });
     return res.status(200).end();
   },
