@@ -14,10 +14,10 @@ const sanatizeConsumer = (consumers: Consumer) => {
 export default {
   async getAll(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
-    const consumer = await models.consumers.findAll({
+    const consumers = await models.consumers.findAll({
       attributes: {exclude: ['password']},
     });
-    return res.status(200).json(consumer);
+    return res.status(200).json(consumers);
   },
 
   async getByConsumerId(req: Request, res: Response, next: NextFunction) {
