@@ -92,7 +92,7 @@ export default(
         },
     });
 
-// i dont think we need this anymore
+// i dont think we need this anymore//
     Consumer.associate = (models: Models) => {
         Consumer.belongsTo(models.consumers, {
           as: 'manager',
