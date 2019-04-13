@@ -40,7 +40,7 @@ export default {
         return res.status(200).json(provider);
     },
 
-    // get function for state 
+    // get function for state
     async getByState(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerState = req.params.state;
@@ -61,21 +61,41 @@ export default {
         return res.status(200).json(provider);
     },
 
-    // get function for provider name
-    async getByName(req: Request, res: Response, next: NextFunction){
+    // get function for phone
+    async getByPhone(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const providerName = req.params.providername;
+        const providerPhone = req.params.phone;
         const provider = await models.providers.findAll({
-            where: {providername: providerName}
+            where: {phone: providerPhone}
         });
         return res.status(200).json(provider);
     },
 
-    async getByServiceProviderId(req: Request, res: Response, next: NextFunction){
+    // get function for email
+    async getByEmail(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const providerId = req.params.providerid;
+        const providerEmail = req.params.email;
+        const provider = await models.providers.findAll({
+            where: {email: providerEmail}
+        });
+        return res.status(200).json(provider);
+    },
+
+    // get function for provider name
+    async getByName(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const providerNa = req.params.providerName;
+        const provider = await models.providers.findAll({
+            where: {providername: providerNa}
+        });
+        return res.status(200).json(provider);
+    },
+
+    async getById(req: Request, res: Response, next: NextFunction){
+        const models = getModels();
+        const providerI = req.params.providerId;
         const provider = await models.providers.findOne({
-            where: {providerId},
+            where: {providerI},
         });
         if (provider) {
             return res.status(200).json(true);
@@ -111,14 +131,16 @@ export default {
         while (!providerId) {
             // doesnt exist yet
             providerId = Math.floor(Math.random() * 10000);
-            if(req.body.name = "Name"){
+            if(req.body.providerNa = "providerName"){
                 if(req.body.address = "address"){
                     if(req.body.city = "city"){
                         if(req.body.state = "state"){
                             if(req.body.zip = "zip"){
-                                if(req.body.review = "review"){
-                                    providerId = 1;
-                                    password = "password";
+                                if(req.body.phone = "phone"){
+                                    if(req.body.email = "email"){
+                                        providerId = 1;
+                                        password = "password";
+                                    }
                                 }
                             }
                         }
@@ -126,7 +148,7 @@ export default {
                 }
             }
 
-            const foundServiceProvider = await models.providers.findOne({
+            const foundProvider = await models.providers.findOne({
                 where: {providerId},
             });
             if(req.body.name != "Name"){
@@ -134,9 +156,11 @@ export default {
                     if(req.body.city != "city"){
                         if(req.body.state != "state"){
                             if(req.body.zip != "zip"){
-                                if(req.body.review != "review"){
-                                    if(foundServiceProvider){
-                                        providerId = null;
+                                if(req.body.phone != "phone"){
+                                    if(req.body.phone != "email"){
+                                        if(foundProvider){
+                                            providerId = null;
+                                        }
                                     }
                                 }
                             }
@@ -151,30 +175,30 @@ export default {
             ...sanatizeInData(req.body),
         });
 
-        return res.status(201).json(sanatizeServiceProvider(provider));
+        return res.status(201).json(sanatizeProvider(provider));
     },
 
     async update(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const providerId = req.params.id;
+        const providerI = req.params.provideId;
 
         await models.providers.update(sanatizeInData(req.body), {
-            where: {id: providerId},
+            where: {provideId: providerI},
         });
-        const updatedServiceProvider = await models.providers.findOne({
+        const updatedProvider = await models.providers.findOne({
             attributes: {exclude: ['password']},
-            where: {id: providerId}
+            where: {providerId: providerI}
         });
 
-        return res.status(200).json(updatedServiceProvider);
+        return res.status(200).json(updatedProvider);
 
     },
 
     async delete(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providerId = req.params.id;
+        const providerI = req.params.providerId;
         await models.providers.destroy({
-            where: {id: providerId}
+            where: {providerId: providerI}
         });
         return res.status(200).end();
     },
@@ -183,7 +207,7 @@ export default {
         const models = getModels();
 
         const provider = await models.providers.findOne({
-            where: {providerId: req.body.providerId},
+            where: {providerId: req.body.providerI},
         });
         if (!provider) {
             return res.boom.badRequest('provider not found');
@@ -194,7 +218,7 @@ export default {
             provider.password,
         );
         if (doPasswordsMatch) {
-            return res.status(200).json(sanatizeServiceProvider(provider));
+            return res.status(200).json(sanatizeProvider(provider));
         }
         return res.boom.unauthorized();
     },
