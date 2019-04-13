@@ -24,7 +24,7 @@ export default {
     async getByAddress(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerAddress = req.params.address;
-        const provider = await models.providers.findOne({
+        const provider = await models.providers.findAll({
             where: {address: providerAddress}
         });
         return res.status(200).json(provider);
@@ -34,7 +34,7 @@ export default {
     async getByCity(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerCity = req.params.city;
-        const provider = await models.providers.findOne({
+        const provider = await models.providers.findAll({
             where: {city: providercity}
         });
         return res.status(200).json(provider);
@@ -44,7 +44,7 @@ export default {
     async getByState(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerState = req.params.state;
-        const provider = await models.providers.findOne({
+        const provider = await models.providers.findAll({
             where: {state: providerState}
         });
         return res.status(200).json(provider);
@@ -55,28 +55,8 @@ export default {
     async getByZip(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerZip = req.params.zip;
-        const provider = await models.providers.findOne({
+        const provider = await models.providers.findAll({
             where: {zip: providerState}
-        });
-        return res.status(200).json(provider);
-    },
-
-    // get function for review
-    async getByReview(req: Request, res: Response, next: NextFunction){
-        const models = getModels();
-        const providerReview = req.params.review;
-        const provider = await models.providers.findOne({
-            where: {review: providerReview}
-        });
-        return res.status(200).json(provider);
-    },
-
-    async getById(req: Request, res: Response, next: NextFunction) {
-        const models = getModels();
-        const providerId = req.params.id;
-        const provider = await models.providers.findOne({
-            attributes: {exclude: ['password']},
-            where: {id: providerId}
         });
         return res.status(200).json(provider);
     },
@@ -159,10 +139,6 @@ export default {
         const hash = await bcrypt.hash(req.body.password, saltRounds);
         const provider = await models.providers.create({
             ...sanatizeInData(req.body),
-            password: hash,
-            providerId,
-            active: true,
-            role: role.CASHIER, <---?
         });
 
         return res.status(201).json(sanatizeServiceProvider(provider));
