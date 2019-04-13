@@ -91,7 +91,7 @@ export default {
         return res.status(200).json(provider);
     },
 
-    async getByProviderId(req: Request, res: Response, next: NextFunction){
+    async getById(req: Request, res: Response, next: NextFunction){
         const models = getModels();
         const providerI = req.params.providerId;
         const provider = await models.providers.findOne({
