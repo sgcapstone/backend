@@ -6,7 +6,7 @@ import {role} from '../models/enums/role';
 
 import {saltRounds, sanatizeInData} from './misc';
 
-const sanatizeServiceProvider = (serviceProvider: ServiceProvider) => {
+const sanatizeProvider = (provider: provider) => {
     const {password, ...rest} = service.get({plain: true});
     return rest;
 };
@@ -14,80 +14,80 @@ const sanatizeServiceProvider = (serviceProvider: ServiceProvider) => {
 export default {
     async getAll(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const serviceProviders = await models.serviceProviders.findAll({
+        const providers = await models.providers.findAll({
             attributes: {exclude: ['password']}
         });
-        return res.status(200).json(serviceProviders);
+        return res.status(200).json(providers);
     },
 
     // get function for address
     async getByAddress(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderAddress = req.params.address;
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {address: serviceProviderAddress}
+        const providerAddress = req.params.address;
+        const provider = await models.providers.findOne({
+            where: {address: providerAddress}
         });
-        return res.status(200).json(serviceProvider);
+        return res.status(200).json(provider);
     },
 
     // get function for city
     async getByCity(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderCity = req.params.city;
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {city: serviceProvidercity}
+        const providerCity = req.params.city;
+        const provider = await models.providers.findOne({
+            where: {city: providercity}
         });
-        return res.status(200).json(serviceProvider);
+        return res.status(200).json(provider);
     },
 
     // get function for state
     async getByState(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderState = req.params.state;
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {state: serviceProviderState}
+        const providerState = req.params.state;
+        const provider = await models.providers.findOne({
+            where: {state: providerState}
         });
-        return res.status(200).json(serviceProvider);
+        return res.status(200).json(provider);
     },
 
 
     // get function for zip
     async getByZip(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderZip = req.params.zip;
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {zip: serviceProviderState}
+        const providerZip = req.params.zip;
+        const provider = await models.providers.findOne({
+            where: {zip: providerState}
         });
-        return res.status(200).json(serviceProvider);
+        return res.status(200).json(provider);
     },
 
     // get function for review
     async getByReview(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderReview = req.params.review;
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {review: serviceProviderReview}
+        const providerReview = req.params.review;
+        const provider = await models.providers.findOne({
+            where: {review: providerReview}
         });
-        return res.status(200).json(serviceProvider);
+        return res.status(200).json(provider);
     },
 
     async getById(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const serviceProviderId = req.params.id;
-        const serviceProvider = await models.serviceProviders.findOne({
+        const providerId = req.params.id;
+        const provider = await models.providers.findOne({
             attributes: {exclude: ['password']},
-            where: {id: serviceProviderId}
+            where: {id: providerId}
         });
-        return res.status(200).json(serviceProvider);
+        return res.status(200).json(provider);
     },
 
     async getByServiceProviderId(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderId = req.params.businessId;
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {serviceProviderId},
+        const providerId = req.params.businessId;
+        const provider = await models.providers.findOne({
+            where: {providerId},
         });
-        if (serviceProvider) {
+        if (provider) {
             return res.status(200).json(true);
         }
         return res.status(200).json(false);
@@ -95,19 +95,19 @@ export default {
 
     async count(req: Request, res: Response, next: NextFunction) {
         const models = getModel();
-        const count = await models.serviceProviders.count();
+        const count = await models.providers.count();
         return res.status(200).json(count);
     },
 
     async create(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        if((await models.serviceProviders.count()) > 9998) {
+        if((await models.providers.count()) > 9998) {
             return res.boom.internal(
                 'Database cannot accept more service providers until some are removed',
             );
         }
 
-        let serviceProviderId = null;
+        let providerId = null;
         let password = req.body.password;
         let name = req.body.name;
         let address = req.body.address;
@@ -118,16 +118,16 @@ export default {
 
 
 
-        while (!serviceProviderId) {
+        while (!providerId) {
             // doesnt exist yet
-            serviceProviderId = Math.floor(Math.random() * 10000);
+            providerId = Math.floor(Math.random() * 10000);
             if(req.body.name = "Name"){
                 if(req.body.address = "address"){
                     if(req.body.city = "city"){
                         if(req.body.state = "state"){
                             if(req.body.zip = "zip"){
                                 if(req.body.review = "review"){
-                                    serviceProviderId = 1;
+                                    providerId = 1;
                                     password = "password";
                                 }
                             }
@@ -136,8 +136,8 @@ export default {
                 }
             }
 
-            const foundServiceProvider = await models.serviceProviders.findOne({
-                where: {serviceProviderId},
+            const foundServiceProvider = await models.providers.findOne({
+                where: {providerId},
             });
             if(req.body.name != "Name"){
                 if(req.body.address != "address"){
@@ -146,7 +146,7 @@ export default {
                             if(req.body.zip != "zip"){
                                 if(req.body.review != "review"){
                                     if(foundServiceProvider){
-                                        serviceProviderId = null;
+                                        providerId = null;
                                     }
                                 }
                             }
@@ -157,27 +157,27 @@ export default {
 
         }
         const hash = await bcrypt.hash(req.body.password, saltRounds);
-        const serviceProvider = await models.serviceProviders.create({
+        const provider = await models.providers.create({
             ...sanatizeInData(req.body),
             password: hash,
-            serviceProviderId,
+            providerId,
             active: true,
             role: role.CASHIER, <---?
         });
 
-        return res.status(201).json(sanatizeServiceProvider(serviceProvider));
+        return res.status(201).json(sanatizeServiceProvider(provider));
     },
 
     async update(req: Request, res: Response, next: NextFunction){
         const models = getModels();
-        const serviceProviderId = req.params.id;
+        const providerId = req.params.id;
 
-        await models.serviceProviders.update(sanatizeInData(req.body), {
-            where: {id: serviceProviderId},
+        await models.providers.update(sanatizeInData(req.body), {
+            where: {id: providerId},
         });
-        const updatedServiceProvider = await models.serviceProviders.findOne({
+        const updatedServiceProvider = await models.providers.findOne({
             attributes: {exclude: ['password']},
-            where: {id: serviceProviderId}
+            where: {id: providerId}
         });
 
         return res.status(200).json(updatedServiceProvider);
@@ -186,9 +186,9 @@ export default {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const serviceProviderId = req.params.id;
-        await models.serviceProviders.destroy({
-            where: {id: serviceProviderId}
+        const providerId = req.params.id;
+        await models.providers.destroy({
+            where: {id: providerId}
         });
         return res.status(200).end();
     },
@@ -196,19 +196,19 @@ export default {
     async login(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
 
-        const serviceProvider = await models.serviceProviders.findOne({
-            where: {serviceProviderId: req.body.serviceProviderId},
+        const provider = await models.providers.findOne({
+            where: {providerId: req.body.providerId},
         });
-        if (!serviceProvider) {
-            return res.boom.badRequest('serviceProvider not found');
+        if (!provider) {
+            return res.boom.badRequest('provider not found');
         }
 
         const doPasswordsMatch = await bcrypt.compare(
             req.body.password,
-            serviceProvider.password,
+            provider.password,
         );
         if (doPasswordsMatch) {
-            return res.status(200).json(sanatizeServiceProvider(serviceProvider));
+            return res.status(200).json(sanatizeServiceProvider(provider));
         }
         return res.boom.unauthorized();
     },
