@@ -1,10 +1,10 @@
 interface Obj {
-  id: string;
+  // id: string;
   createdAt: Date;
   updatedAt: Date;
   [propName: string]: any;
 }
-export const sanatizeInData = ({id, createdAt, updatedAt, ...rest}: Obj) =>
+export const sanatizeInData = ({/*id, */createdAt, updatedAt, ...rest}: Obj) =>
   rest;
 
 export const saltRounds = 10;
