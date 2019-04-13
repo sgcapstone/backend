@@ -24,7 +24,7 @@ export interface ConsumerInstance
     id: string;
     firstname: string;
     lastname: string;
-    address: sting;
+    address: string;
     city: string;
     zip: number;
     state: string;
