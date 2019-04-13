@@ -1,4 +1,4 @@
-export enum role {
-  CUSTOMER = 'customer',
-  SERVICE_PROVIDER = 'service provider',
-}
+// export enum role {
+//   CUSTOMER = 'customer',
+//   PROVIDER = 'provider',
+// }

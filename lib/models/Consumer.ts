@@ -1,82 +1,75 @@
 import * as Sequelize from 'sequelize';
-
 import {tableMeta, tables} from '../constants';
-import {role} from '../enums/role';
 
-export interface ConsumerAttributes{
+export interface ConsumerAttributes {
     id?: string;
-    firstname?: string;
-    lastname?: string;
+    firstName?: string;
+    lastName?: string;
     address?: string;
     city?: string;
     zip?: number;
     state?: string;
     name?: string;
-    active?: boolean;
-    role?: role;
     password?: string;
-    customerid?: number;
+    customerId?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
-
 export interface ConsumerInstance
-    extend Sequelize.Instance<ConsumerAttributes>{
+    extends Sequelize.Instance < ConsumerAttributes > {
     id: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     address: string;
     city: string;
     zip: number;
     state: string;
-    active: boolean;
-    role: role;
     password: string;
-    customerid: number;
+    customerId: number;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export default(
-    sequelize: Sequelize.Sequqlize,
+    sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
 ) => {
-    const Provider: any = sequelize.define(tables.consumer, {
+    const Consumer: any = sequelize.define(tables.consumers, {
         ...tableMeta,
-        firstname:{
+        firstName: {
             allowNull: false,
             type: DataTypes.STRING,
             field: 'first_name',
         },
-        lastname:{
+        lastName: {
             allowNull: false,
             type: DataTypes.STRING,
             field: 'last_name',
         },
         address: {
             allowNull: false,
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             field: 'address',
         },
         city: {
             allowNull: false,
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             field: 'city',
         },
         state: {
             allowNull: false,
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             field: 'state',
         },
         zip: {
             allowNull: false,
-            type: Datatypes.INTEGER,
+            type: DataTypes.INTEGER,
             field: 'zip',
         },
         password: {
             allowNull: false,
             type: DataTypes.STRING,
-        },
-        active: {
-          allowNull: false,
-          type: DataTypes.BOOLEAN,
         },
         customerId: {
             allowNull: false,
@@ -84,25 +77,7 @@ export default(
             type: DataTypes.INTEGER,
             field: 'customer_id',
         },
-        role: {
-            allowNull: false,
-            type: DataTypes.ENUM(
-                role.CONSUMER,
-            ),
-        },
     });
-
-// i dont think we need this anymore//
-    Consumer.associate = (models: Models) => {
-        Consumer.belongsTo(models.consumers, {
-          as: 'manager',
-          foreignKey: {
-            allowNull: true,
-            field: 'manager_id',
-          },
-        });
-    };
 
     return Consumer;
 };
-

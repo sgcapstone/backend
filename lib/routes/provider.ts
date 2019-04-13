@@ -8,10 +8,10 @@ router.get('/:address', providerController.getByAddress);
 router.get('/:city', providerController.getByCity);
 router.get('/:state', providerController.getByState);
 router.get('/:zip', providerController.getByZip);
-router.get('/:review', providerController.getByReview);
-router.get('/:providername', providerController.getByame);
-router.get('/:businessid', providerController.getById);
+router.get('/:providerName', providerController.getByName);
+router.get('/:providerId', providerController.getByServiceProviderId);
 router.post('/', providerController.create);
+router.post('/login', providerController.login);
 router.put('/:id', providerController.update);
 router.delete('/:id', providerController.delete);
 

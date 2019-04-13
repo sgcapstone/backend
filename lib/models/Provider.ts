@@ -1,38 +1,42 @@
 import * as Sequelize from 'sequelize';
-
 import {tableMeta, tables} from '../constants';
-import {role} from './enums/role';
 
 export interface ProviderAttributes {
+  id?: string;
   providerName?: string;
   address?: string;
   city?: string;
   state?: string;
   zip?: number;
   providerId?: number;
-  role?: string;
   phone?: string;
   email?: string;
+  password?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ProviderInstance
   extends Sequelize.Instance<ProviderAttributes> {
+  id: string;
   providerName: string;
   address: string;
   city: string;
   state: string;
   zip: number;
   providerId: number;
-  role: string;
   phone: string;
   email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export default (
   sequelize: Sequelize.Sequelize,
   DataTypes: Sequelize.DataTypes,
 ) => {
-  const Provider: any = sequelize.define(tables.provider, {
+  const Provider: any = sequelize.define(tables.providers, {
     ...tableMeta,
     providerName: {
       allowNull: false,
@@ -64,13 +68,6 @@ export default (
       type: DataTypes.INTEGER,
       field: 'provider_id',
     },
-    role: {
-      allowNull: false,
-      type: DataTypes.ENUM(
-        role.CUSTOMER,
-        role.SERVICE_PROVIDER,
-      ),
-    },
     phone: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -86,16 +83,6 @@ export default (
       type: DataTypes.STRING,
     },
   });
-
-  /*Employee.associate = (models: Models) => {
-    Employee.belongsTo(models.employees, {
-      as: 'manager',
-      foreignKey: {
-        allowNull: true,
-        field: 'manager_id',
-      },
-    });
-  };*/
 
   return Provider;
 };
