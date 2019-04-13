@@ -38,7 +38,7 @@ export default {
         return res.status(200).json(provider);
     },
 
-    // get function for provider name
+    // TODO: get function for service
     async getByService(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const providerName = req.params.providerName;
@@ -105,14 +105,14 @@ export default {
 
     async update(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providerI = req.params.provideId;
+        const providerId = req.params.providerId;
 
         await models.providers.update(sanatizeInData(req.body), {
-            where: {provideId: providerI},
+            where: {providerId},
         });
         const updatedProvider = await models.providers.findOne({
             attributes: {exclude: ['password']},
-            where: {providerId: providerI},
+            where: {providerId},
         });
 
         return res.status(200).json(updatedProvider);
@@ -121,9 +121,9 @@ export default {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providerI = req.params.providerId;
+        const providerId = req.params.providerId;
         await models.providers.destroy({
-            where: {providerId: providerI},
+            where: {providerId},
         });
         return res.status(200).end();
     },
@@ -132,7 +132,7 @@ export default {
         const models = getModels();
 
         const provider = await models.providers.findOne({
-            where: {providerId: req.body.providerI},
+            where: {providerId: req.body.providerId},
         });
         if (!provider) {
             return res.boom.badRequest('provider not found');
