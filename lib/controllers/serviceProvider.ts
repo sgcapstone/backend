@@ -10,7 +10,7 @@ const sanatizeServiceProvider = (serviceProvider: ServiceProvider) => {
     const {password, ...rest} = service.get({plain: true});
     return rest;
 };
-
+// testing
 export default {
     async getAll(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
