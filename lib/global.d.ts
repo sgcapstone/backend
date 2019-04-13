@@ -1,8 +1,7 @@
 import {Model, Sequelize, SequelizeStatic} from 'sequelize';
-
 import {ConsumerAttributes, ConsumerInstance} from './models/Consumer';
-import {EmployeeAttributes, EmployeeInstance} from './models/Employee';
-import {ProductAttributes, ProductInstance} from './models/Product';
+// import {EmployeeAttributes, EmployeeInstance} from './models/Employee';
+// import {ProductAttributes, ProductInstance} from './models/Product';
 import {ProviderAttributes, ProviderInstance} from './models/Provider';
 
 declare global {
