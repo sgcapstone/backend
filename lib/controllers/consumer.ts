@@ -14,7 +14,7 @@ const sanatizeConsumer = (consumers: Consumer) => {
 export default {
   async getAll(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
-    const consumers = await models.consumers.findAll({
+    const consumers = await models.consumer.findAll({
       attributes: {exclude: ['password']},
     });
     return res.status(200).json(consumers);
@@ -23,7 +23,7 @@ export default {
   async getByConsumerId(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
     const customerId = req.params.customerId;
-    const consumer = await models.consumers.findOne({
+    const consumer = await models.consumer.findOne({
       where: {customerId},
     });
     if (consumer) {
@@ -34,13 +34,13 @@ export default {
 
   async count(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
-    const count = await models.consumers.count();
+    const count = await models.consumer.count();
     return res.status(200).json(count);
   },
 
   async create(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
-    if ((await models.consumers.count()) > 9998) {
+    if ((await models.consumer.count()) > 9998) {
       return res.boom.internal(
         'Database cannot accept more customers until some are removed',
       );
@@ -57,7 +57,7 @@ export default {
           password = 'password';
         }
       }
-      const foundConsumer = await models.consumers.findOne({
+      const foundConsumer = await models.consumer.findOne({
         where: {customerId},
       });
       if (req.body.firstName !== 'First') {
@@ -70,7 +70,7 @@ export default {
     }
 
     const hash = await bcrypt.hash(req.body.password, saltRounds);
-    const consumer = await models.consumers.create({
+    const consumer = await models.consumer.create({
       ...sanatizeInData(req.body),
       password: hash,
       customerId,
@@ -83,10 +83,10 @@ export default {
     const models = getModels();
     const customerId = req.params.id;
 
-    await models.consumers.update(sanatizeInData(req.body), {
+    await models.consumer.update(sanatizeInData(req.body), {
       where: {id: customerId},
     });
-    const updatedConsumer = await models.consumers.findOne({
+    const updatedConsumer = await models.consumer.findOne({
       attributes: {exclude: ['password']},
       where: {id: customerId},
     });
@@ -97,7 +97,7 @@ export default {
   async delete(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
     const customerId = req.params.id;
-    await models.consumers.destroy({
+    await models.consumer.destroy({
       where: {id: customerId},
     });
     return res.status(200).end();
@@ -106,7 +106,7 @@ export default {
   async login(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
 
-    const consumer = await models.consumers.findOne({
+    const consumer = await models.consumer.findOne({
       where: {customerId: req.body.customerId},
     });
     if (!consumer) {

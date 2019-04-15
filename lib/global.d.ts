@@ -1,24 +1,19 @@
 import {Model, Sequelize, SequelizeStatic} from 'sequelize';
 import {ConsumerAttributes, ConsumerInstance} from './models/Consumer';
-// import {EmployeeAttributes, EmployeeInstance} from './models/Employee';
-// import {ProductAttributes, ProductInstance} from './models/Product';
 import {ProviderAttributes, ProviderInstance} from './models/Provider';
+import {ServicesAttributes, ServicesInstance} from './models/Services';
 
 declare global {
-  // type Employee = EmployeeInstance;
-  // type Product = ProductInstance;
   type Consumer = ConsumerInstance;
   type Provider = ProviderInstance;
-  // type Service = ServiceInstance;
+  type Service = ServicesInstance;
 
   // Define global model types
   interface Models {
     sequelize: Sequelize;
     Sequelize: SequelizeStatic;
-    // products: Model<ProductInstance, ProductAttributes>;
-    // employees: Model<EmployeeInstance, EmployeeAttributes>;
-    consumers: Model<ConsumerInstance, ConsumerAttributes>;
-    providers: Model<ProviderInstance, ProviderAttributes>;
-    // services: Model<ServiceInstance, ServiceAttributes>;
+    consumer: Model<ConsumerInstance, ConsumerAttributes>;
+    provider: Model<ProviderInstance, ProviderAttributes>;
+    service: Model<ServicesInstance, ServicesAttributes>;
   }
 }

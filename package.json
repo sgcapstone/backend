@@ -5,12 +5,12 @@
   "typings": "dist/index",
   "license": "MIT",
   "scripts": {
-    "lint": "./node_modules/.bin/tslint",
-    "prettier": "./node_modules/.bin/prettier --parser typescript --write \"./lib/**/*.ts\"",
-    "concurrently": "./node_modules/.bin/concurrently",
-    "nodemon": "./node_modules/.bin/nodemon",
-    "build": "./node_modules/.bin/tsc",
-    "build:watch": "./node_modules/.bin/tsc --watch",
+    "lint": "tslint",
+    "prettier": "prettier --parser typescript --write \"./lib/**/*.ts\"",
+    "concurrently": "concurrently",
+    "nodemon": "nodemon",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
     "serve:dev": "npm run nodemon dist/index.js",
     "serve:prod": "node dist/index.js"
   },
@@ -30,12 +30,26 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "bcrypt": "^3.0.5",
+    "bcrypt": "^3.0.6",
     "body-parser": "1.18.2",
     "cors": "2.8.4",
     "express": "4.16.2",
     "express-boom": "2.0.0",
     "pg": "^7.9.0",
-    "sequelize": "4.33.4"
-  }
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.43.1"
+  },
+  "description": "Server for software engineering",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgcapstone/backend.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/sgcapstone/backend/issues"
+  },
+  "homepage": "https://github.com/sgcapstone/backend#readme"
 }

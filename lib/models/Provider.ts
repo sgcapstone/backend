@@ -32,10 +32,10 @@ export interface ProviderInstance
   updatedAt: Date;
 }
 
-export default (
+export default function(
   sequelize: Sequelize.Sequelize,
   DataTypes: Sequelize.DataTypes,
-) => {
+) {
   const Provider: any = sequelize.define(tables.providers, {
     ...tableMeta,
     providerName: {
@@ -85,4 +85,4 @@ export default (
   });
 
   return Provider;
-};
+}

@@ -14,10 +14,9 @@ if (env === DEVELOPMENT) {
 import {getModels} from './models';
 
 import consumerRoutes from './routes/consumer';
-// import employeeRoutes from './routes/employee';
 import healthRoutes from './routes/health';
-// import productRoutes from './routes/product';
 import providerRoutes from './routes/provider';
+import serviceRoutes from './routes/service';
 
 const port = process.env.PORT || 4000;
 
@@ -36,11 +35,9 @@ const start = async () => {
 
   const prefix = '/api';
   app.use(prefix, healthRoutes);
-  // app.use(`${prefix}/product`, productRoutes);
-  // app.use(`${prefix}/employee`, employeeRoutes);
   app.use(`${prefix}/provider`, providerRoutes);
   app.use(`${prefix}/consumer`, consumerRoutes);
-  // app.use(`${prefix}/service`, serviceRoutes);
+  app.use(`${prefix}/service`, serviceRoutes);
 
   app.use((req, res, next) => {
     res.boom.notFound();

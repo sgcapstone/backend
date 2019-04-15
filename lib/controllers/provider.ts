@@ -12,7 +12,7 @@ const sanatizeProvider = (providers: Provider) => {
 export default {
     async getAll(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providers = await models.providers.findAll({
+        const providers = await models.provider.findAll({
             attributes: {exclude: ['password']},
         });
         return res.status(200).json(providers);
@@ -22,7 +22,7 @@ export default {
     async getByCity(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const city = req.params.city;
-        const provider = await models.providers.findAll({
+        const provider = await models.provider.findAll({
             where: {city},
         });
         return res.status(200).json(provider);
@@ -32,7 +32,7 @@ export default {
     async getByName(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const providerName = req.params.providerName;
-        const provider = await models.providers.findAll({
+        const provider = await models.provider.findAll({
             where: {providerName},
         });
         return res.status(200).json(provider);
@@ -42,7 +42,7 @@ export default {
     async getByService(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const providerName = req.params.providerName;
-        const provider = await models.providers.findAll({
+        const provider = await models.provider.findAll({
             where: {providerName},
         });
         return res.status(200).json(provider);
@@ -52,7 +52,7 @@ export default {
     async getByProviderId(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const providerId = req.params.providerId;
-        const provider = await models.providers.findAll({
+        const provider = await models.provider.findAll({
             where: {providerId},
         });
         return res.status(200).json(provider);
@@ -60,13 +60,13 @@ export default {
 
     async count(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const count = await models.providers.count();
+        const count = await models.provider.count();
         return res.status(200).json(count);
     },
 
     async create(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        if ((await models.providers.count()) > 9998) {
+        if ((await models.provider.count()) > 9998) {
             return res.boom.internal(
                 'Database cannot accept more service providers until some are removed',
             );
@@ -83,7 +83,7 @@ export default {
                 password = 'password';
             }
 
-            const foundProvider = await models.providers.findOne({
+            const foundProvider = await models.provider.findOne({
                 where: {providerId},
             });
             if (req.body.providerName !== 'providerName') {
@@ -94,7 +94,7 @@ export default {
         }
 
         const hash = await bcrypt.hash(req.body.password, saltRounds);
-        const provider = await models.providers.create({
+        const provider = await models.provider.create({
             ...sanatizeInData(req.body),
             password: hash,
             providerId,
@@ -107,10 +107,10 @@ export default {
         const models = getModels();
         const providerId = req.params.providerId;
 
-        await models.providers.update(sanatizeInData(req.body), {
+        await models.provider.update(sanatizeInData(req.body), {
             where: {providerId},
         });
-        const updatedProvider = await models.providers.findOne({
+        const updatedProvider = await models.provider.findOne({
             attributes: {exclude: ['password']},
             where: {providerId},
         });
@@ -122,7 +122,7 @@ export default {
     async delete(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         const providerId = req.params.providerId;
-        await models.providers.destroy({
+        await models.provider.destroy({
             where: {providerId},
         });
         return res.status(200).end();
@@ -131,7 +131,7 @@ export default {
     async login(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
 
-        const provider = await models.providers.findOne({
+        const provider = await models.provider.findOne({
             where: {providerId: req.body.providerId},
         });
         if (!provider) {

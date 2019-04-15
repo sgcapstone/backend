@@ -23,8 +23,6 @@ export const tableMeta = {
 };
 
 export const tables = {
-  // products: 'products',
-  // employees: 'employees',
   consumers: 'consumer',
   providers: 'provider',
   services: 'service',

@@ -18,10 +18,10 @@ export interface ServicesInstance
     updatedAt: Date;
 }
 
-export default(
+export default function(
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
-) => {
+) {
     const Service: any = sequelize.define(tables.services, {
         ...tableMeta,
         serviceName: {
@@ -37,4 +37,4 @@ export default(
     });
 
     return Service;
-};
+}

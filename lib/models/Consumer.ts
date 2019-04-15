@@ -31,10 +31,10 @@ export interface ConsumerInstance
     updatedAt: string;
 }
 
-export default(
+export default function(
     sequelize: Sequelize.Sequelize,
     DataTypes: Sequelize.DataTypes,
-) => {
+) {
     const Consumer: any = sequelize.define(tables.consumers, {
         ...tableMeta,
         firstName: {
@@ -80,4 +80,4 @@ export default(
     });
 
     return Consumer;
-};
+}
