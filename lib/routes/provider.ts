@@ -10,7 +10,7 @@ router.get('/service/:service', providerController.getByService);
 router.get('/:providerId', providerController.getByProviderId);
 router.post('/', providerController.create);
 router.post('/login', providerController.login);
-router.put('/:id', providerController.update);
-router.delete('/:id', providerController.delete);
+router.put('/:providerId', providerController.update);
+router.delete('/:providerId', providerController.delete);
 
 export default router;

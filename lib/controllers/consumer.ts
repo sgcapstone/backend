@@ -26,10 +26,7 @@ export default {
     const consumer = await models.consumer.findOne({
       where: {customerId},
     });
-    if (consumer) {
-      return res.status(200).json(true);
-    }
-    return res.status(200).json(false);
+    return res.status(200).json(consumer);
   },
 
   async count(req: Request, res: Response, next: NextFunction) {
@@ -81,14 +78,14 @@ export default {
 
   async update(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
-    const customerId = req.params.id;
+    const customerId = req.params.ConsumerId;
 
     await models.consumer.update(sanatizeInData(req.body), {
-      where: {id: customerId},
+      where: {customerId},
     });
     const updatedConsumer = await models.consumer.findOne({
       attributes: {exclude: ['password']},
-      where: {id: customerId},
+      where: {customerId},
     });
 
     return res.status(200).json(updatedConsumer);
@@ -96,9 +93,9 @@ export default {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     const models = getModels();
-    const customerId = req.params.id;
+    const customerId = req.params.customerId;
     await models.consumer.destroy({
-      where: {id: customerId},
+      where: {customerId},
     });
     return res.status(200).end();
   },

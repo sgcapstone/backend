@@ -33,7 +33,7 @@ export default {
 
     async update(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const id = req.params.Id;
+        const id = req.params.id;
 
         await models.service.update(sanatizeInData(req.body), {
             where: {id},
@@ -48,7 +48,7 @@ export default {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const id = req.params.Id;
+        const id = req.params.id;
         await models.service.destroy({
             where: {id},
         });

@@ -7,8 +7,8 @@ export interface ConsumerAttributes {
     lastName?: string;
     address?: string;
     city?: string;
-    zip?: number;
     state?: string;
+    zip?: number;
     name?: string;
     password?: string;
     customerId?: number;
@@ -23,8 +23,8 @@ export interface ConsumerInstance
     lastName: string;
     address: string;
     city: string;
-    zip: number;
     state: string;
+    zip: number;
     password: string;
     customerId: number;
     createdAt: string;
