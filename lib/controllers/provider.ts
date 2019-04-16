@@ -48,7 +48,7 @@ export default {
         });
         const providers = [];
         for (const service of services) {
-            providers.push(await models.provider.findAll({
+            providers.push(await models.provider.findOne({
                 where: {providerId: service.providerId},
             }));
         }
