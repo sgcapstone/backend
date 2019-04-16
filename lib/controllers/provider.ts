@@ -2,6 +2,7 @@ import * as bcrypt from 'bcrypt';
 import {NextFunction, Request, Response} from 'express';
 
 import {getModels} from '../models';
+import Provider from '../models/Provider';
 import {saltRounds, sanatizeInData} from './misc';
 
 const sanatizeProvider = (providers: Provider) => {
@@ -38,14 +39,20 @@ export default {
         return res.status(200).json(provider);
     },
 
-    // TODO: get function for service
+    // get function for service
     async getByService(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
-        const providerName = req.params.providerName;
-        const provider = await models.provider.findAll({
-            where: {providerName},
+        const serviceName = req.params.service;
+        const services = await models.service.findAll({
+            where: {serviceName},
         });
-        return res.status(200).json(provider);
+        const providers = [];
+        for (const service of services) {
+            providers.push(await models.provider.findAll({
+                where: {providerId: service.providerId},
+            }));
+        }
+        return res.status(200).json(providers);
     },
 
     // get function for provider name
