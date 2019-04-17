@@ -12,7 +12,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve:dev": "npm run nodemon dist/index.js",
-    "serve:prod": "node dist/index.js",
+    "serve:prod": "node dist/index.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^1.0.0",
