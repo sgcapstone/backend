@@ -16,6 +16,12 @@ export default {
         return res.status(200).json(services);
     },
 
+    async count(req: Request, res: Response, next: NextFunction) {
+        const models = getModels();
+        const count = await models.service.count();
+        return res.status(200).json(count);
+    },
+
     async create(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
         if ((await models.service.count()) > 9998) {
