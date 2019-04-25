@@ -7,7 +7,7 @@ router.get('/', providerController.getAll);
 router.get('/city/:city', providerController.getByCity);
 router.get('/name/:providerName', providerController.getByName);
 router.get('/service/:service', providerController.getByService);
-router.get('/services/:providerid', providerController.getServiceByProvider);
+router.get('/services/:providerId', providerController.getServiceByProvider);
 router.get('/count/', providerController.count);
 router.get('/:providerId', providerController.getByProviderId);
 router.post('/', providerController.create);
