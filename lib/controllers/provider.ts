@@ -55,6 +55,16 @@ export default {
         return res.status(200).json(providers);
     },
 
+    // get function for services
+    async getServiceByProvider(req: Request, res: Response, next: NextFunction) {
+        const models = getModels();
+        const providerId = req.params.providerId;
+        const services = await models.service.findAll({
+            where: {providerId},
+        });
+        return res.status(200).json(services);
+    },
+
     // get function for provider name
     async getByProviderId(req: Request, res: Response, next: NextFunction) {
         const models = getModels();
